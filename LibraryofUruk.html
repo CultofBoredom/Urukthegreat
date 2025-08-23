@@ -1,17 +1,89 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  <meta charset="UTF-8">
-  <title>bored as u can see</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-    <a href="index.html">Uruk the Great</a>
-    <p>Library of Uruk</p>
-    <p>Short stories</p>
-    <p>Novels</p>
-    <p>Science B****</p>
-    <p>Miscelaneous</p>
-  </body>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Biblioteca 3D</title>
+<style>
+  body, html {
+    margin: 0;
+    height: 200vh; /* espacio para scrollear */
+    overflow-x: hidden;
+    background: linear-gradient(#1e1e1e, #111);
+    perspective: 1000px; /* cámara 3D */
+    font-family: sans-serif;
+  }
 
+  .library {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    transform-style: preserve-3d;
+  }
+
+  .book {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 200px;
+    background: sienna;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    transform: translate(-50%, -50%) translateZ(0px);
+    transition: transform 0.3s;
+  }
+
+  .book:hover {
+    transform: translate(-50%, -50%) translateZ(var(--z)px) scale(1.2);
+  }
+
+  /* Opcional: fondo de libreros */
+  .shelf {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2000px;
+    height: 1000px;
+    background: url('https://i.imgur.com/2JkIjoK.jpg') no-repeat center;
+    background-size: cover;
+    transform: translate(-50%, -50%) translateZ(-2000px);
+    z-index: -1;
+  }
+</style>
+</head>
+<body>
+
+<div class="library">
+  <div class="shelf"></div>
+  <div class="book" data-z="-100">Libro 1</div>
+  <div class="book" data-z="-300">Libro 2</div>
+  <div class="book" data-z="-500">Libro 3</div>
+  <div class="book" data-z="-700">Libro 4</div>
+  <div class="book" data-z="-900">Libro 5</div>
+</div>
+
+<script>
+const books = document.querySelectorAll('.book');
+
+function animate() {
+  const scrollTop = window.scrollY;
+  books.forEach(book => {
+    const z = parseInt(book.dataset.z);
+    const newZ = z + scrollTop; 
+    book.style.transform = `translate(-50%, -50%) translateZ(${newZ}px)`;
+  });
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
 </html>
+
+
